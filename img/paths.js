@@ -35,7 +35,7 @@ const IMG = {
   // Положи файлы в img/characters/ и впиши имена.
   // Ключ (слева от двоеточия) — это id персонажа из data.js
   characters: {
-    "char-001": "person1.jpg",
+    "char-001": "person1.png",
     "char-002": "person2.png",
     "char-003": null,  // null = фото пока нет, будет силуэт
     "char-004": null,
