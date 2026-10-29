@@ -187,6 +187,14 @@
     $("about-text").innerHTML = paragraphs(a.text);
     $("about-sign").innerHTML = `— <span class="t-accent">${rich(SITE.author || "████████")}</span>`;
 
+    // Устанавливаем фон для баннера персонажей из img/paths.js
+    if (typeof IMG !== "undefined" && IMG.charactersBanner) {
+      const banner = $("characters-hero");
+      if (banner) {
+        banner.style.backgroundImage = `url('img/characters/${IMG.charactersBanner}')`;
+      }
+    }
+
     $("footer-note").textContent = SITE.footerNote || "";
     $("footer-meta").innerHTML = `${esc(SITE.title)} · ${esc(SITE.author)}`;
   }
