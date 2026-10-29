@@ -186,7 +186,6 @@
     $("about-title").textContent = a.title || "Об истории";
     $("about-text").innerHTML = paragraphs(a.text);
     $("about-sign").innerHTML = `— <span class="t-accent">${rich(SITE.author || "████████")}</span>`;
-    $("about-ps").textContent = a.ps || "";
 
     $("footer-note").textContent = SITE.footerNote || "";
     $("footer-meta").innerHTML = `${esc(SITE.title)} · ${esc(SITE.author)}`;
