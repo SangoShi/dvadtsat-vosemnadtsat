@@ -91,32 +91,32 @@
       return;
     }
 
-    // Усиление басов (80-250 Hz)
+    // Усиление басов (80-250 Hz) — мягче
     const bassBoost = ctx.createBiquadFilter();
     bassBoost.type = "lowshelf";
     bassBoost.frequency.value = 200;
-    bassBoost.gain.value = 8; // +8dB на низких частотах
+    bassBoost.gain.value = 4; // +4dB на низких частотах (было +8dB)
 
-    // Lowpass: режем высокие частоты для эффекта "за стеной"
+    // Lowpass: режем высокие частоты для эффекта "за стеной" — мягче
     const lowpass = ctx.createBiquadFilter();
     lowpass.type = "lowpass";
-    lowpass.frequency.value = 800; // режем выше 800Hz
-    lowpass.Q.value = 1.2;
+    lowpass.frequency.value = 1800; // режем выше 1800Hz (было 800Hz)
+    lowpass.Q.value = 0.7; // более плавный срез (было 1.2)
 
-    // Второй фильтр для дополнительной глухости
+    // Второй фильтр убираем — достаточно одного
     const lowpass2 = ctx.createBiquadFilter();
     lowpass2.type = "lowpass";
-    lowpass2.frequency.value = 1400;
-    lowpass2.Q.value = 0.8;
+    lowpass2.frequency.value = 3500; // очень высоко, почти не режет (было 1400Hz)
+    lowpass2.Q.value = 0.5;
 
-    // Реверберация
+    // Реверберация — короче и тише
     const reverb = ctx.createConvolver();
-    reverb.buffer = makeImpulse(ctx, 3.5 + DEPTH * 3.5); // 3.5-7 секунд
+    reverb.buffer = makeImpulse(ctx, 2.0 + DEPTH * 2.5); // 2-4.5 секунд (было 3.5-7s)
 
     const dry = ctx.createGain();
     const wet = ctx.createGain();
-    dry.gain.value = 0.4;  // 40% прямого сигнала
-    wet.gain.value = 0.65; // 65% реверберации
+    dry.gain.value = 0.65; // 65% прямого сигнала (было 0.4)
+    wet.gain.value = 0.35; // 35% реверберации (было 0.65)
 
     master = ctx.createGain();
     master.gain.value = 0;
