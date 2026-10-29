@@ -23,9 +23,14 @@
   canvas.style.width = '100%';
   canvas.style.height = '100%';
   canvas.style.pointerEvents = 'none';
-  canvas.style.zIndex = '1';
-  cityContainer.style.position = 'relative';
-  cityContainer.insertBefore(canvas, cityContainer.firstChild);
+  canvas.style.zIndex = '2';  // звёзды поверх неба, но под городом
+  // Вставляем canvas после .sky, чтобы небо не закрывало его
+  const sky = cityContainer.querySelector('.sky');
+  if (sky && sky.nextSibling) {
+    cityContainer.insertBefore(canvas, sky.nextSibling);
+  } else {
+    cityContainer.appendChild(canvas);
+  }
   
   const ctx = canvas.getContext('2d');
   
@@ -61,7 +66,7 @@
     }
   }
   
-  // Отслеживание курсора
+  // Отслеживание курсора на окне, чтобы работало даже если .hero-copy закрывает canvas
   function onMouseMove(e) {
     const rect = cityContainer.getBoundingClientRect();
     mouseX = e.clientX - rect.left;
@@ -94,10 +99,12 @@
       star.x += (star.homeX - star.x) * RETURN_SPEED;
       star.y += (star.homeY - star.y) * RETURN_SPEED;
       
-      // Рисуем звезду
+      // Рисуем звезду как кружок
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
       ctx.fillStyle = star.color;
       ctx.globalAlpha = star.alpha;
-      ctx.fillRect(star.x, star.y, star.size, star.size);
+      ctx.fill();
     });
     
     ctx.globalAlpha = 1;
@@ -110,7 +117,8 @@
     initStars();
   });
   
-  cityContainer.addEventListener('mousemove', onMouseMove);
+  // Подписываемся на движения мыши на window, чтобы работало через .hero-copy
+  window.addEventListener('mousemove', onMouseMove);
   cityContainer.addEventListener('mouseleave', onMouseLeave);
   
   resize();
