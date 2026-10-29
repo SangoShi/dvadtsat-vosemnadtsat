@@ -806,31 +806,7 @@ input { font: inherit; }
   margin-bottom: var(--sp-2xl);
 }
 
-.letter .prose p + p { margin-top: var(--sp-xs); }
-
-.letter-sign {
-  text-align: right;
-  font-family: var(--font-hand);
-  font-size: var(--step-1);
-  font-weight: 500;
-  opacity: 0.85;
-  margin-bottom: var(--sp-lg);
-}
-
-.sticky-note {
-  position: absolute;
-  bottom: -28px;
-  right: var(--sp-md);
-  width: min(88%, 280px);
-  background: color-mix(in oklch, var(--c-green) 88%, white);
-  color: var(--c-black);
-  padding: var(--sp-xs) var(--sp-sm);
-  border-radius: var(--rad-sm);
-  font-size: var(--step--1);
-  line-height: 1.5;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-  transform: rotate(1.5deg);
-}
+/* Старые стили .letter и .sticky-note убираем: белую карточку убрали */
 
 /* ════════════════════════════════════════════════════════════════════════
    ПЕРСОНАЖИ: HERO БЛОК
