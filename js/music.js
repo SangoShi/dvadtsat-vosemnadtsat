@@ -35,10 +35,21 @@
   let playing = false;
   let fadeTimer = null;
 
-  audio.src = cfg.src;
   audio.loop = true;
   audio.preload = "auto";
-  console.log('[Music] Audio элемент: loop=' + audio.loop + ', src=' + audio.src);
+  
+  // Загружаем музыку через fetch как blob для обхода CORS
+  fetch(cfg.src)
+    .then(res => res.blob())
+    .then(blob => {
+      const url = URL.createObjectURL(blob);
+      audio.src = url;
+      console.log('[Music] ✓ Audio загружен через blob URL (обход CORS)');
+    })
+    .catch(err => {
+      console.warn('[Music] ✗ Не удалось загрузить через fetch, fallback на прямой src:', err.message);
+      audio.src = cfg.src;
+    });
 
   // Синтетическое «эхо комнаты»: затухающий шум
   function makeImpulse(context, seconds) {
