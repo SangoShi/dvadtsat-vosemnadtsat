@@ -1,0 +1,14 @@
+# Временные файлы
+*.pyc
+__pycache__/
+.DS_Store
+Thumbs.db
+
+# Логи
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
