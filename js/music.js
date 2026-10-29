@@ -91,32 +91,32 @@
       return;
     }
 
-    // Усиление басов (80-250 Hz)
+    // Усиление басов (80-250 Hz) — ЭКСТРЕМАЛЬНО
     const bassBoost = ctx.createBiquadFilter();
     bassBoost.type = "lowshelf";
     bassBoost.frequency.value = 200;
-    bassBoost.gain.value = 12; // +12dB на низких частотах
+    bassBoost.gain.value = 20; // +20dB на низких частотах (было +12dB)
 
-    // Сильный lowpass: режем высокие частоты — делаем звук приглушённым
+    // ЭКСТРЕМАЛЬНЫЙ lowpass: режем высокие частоты очень жёстко
     const lowpass = ctx.createBiquadFilter();
     lowpass.type = "lowpass";
-    lowpass.frequency.value = 1200; // режем выше 1200Hz (было 2400Hz)
-    lowpass.Q.value = 0.7; // мягкая форма среза
+    lowpass.frequency.value = 400; // режем выше 400Hz (было 1200Hz)
+    lowpass.Q.value = 2.0; // резкий срез
 
-    // Второй фильтр для дополнительной глухости
+    // Второй фильтр для ещё большей глухости
     const lowpass2 = ctx.createBiquadFilter();
     lowpass2.type = "lowpass";
-    lowpass2.frequency.value = 2000;
-    lowpass2.Q.value = 0.5;
+    lowpass2.frequency.value = 600; // 600Hz вместо 2000Hz
+    lowpass2.Q.value = 1.5;
 
-    // Длинная реверберация
+    // Длинная реверберация (ещё длиннее)
     const reverb = ctx.createConvolver();
-    reverb.buffer = makeImpulse(ctx, 3.0 + DEPTH * 3);
+    reverb.buffer = makeImpulse(ctx, 5.0 + DEPTH * 5); // 5-10 секунд
 
     const dry = ctx.createGain();
     const wet = ctx.createGain();
-    dry.gain.value = 0.3; // меньше прямого сигнала
-    wet.gain.value = DEPTH * 0.9; // больше реверберации
+    dry.gain.value = 0.15; // 15% прямого сигнала (было 0.3)
+    wet.gain.value = 0.9;  // 90% реверберации (было DEPTH*0.9)
 
     master = ctx.createGain();
     master.gain.value = 0;
@@ -134,7 +134,7 @@
 
     audio.volume = 1; // громкость контролируется через master.gain
     
-    console.log('[Music] ✓ Эффекты настроены: bass=+' + bassBoost.gain.value + 'dB@200Hz, lowpass=' + lowpass.frequency.value + 'Hz→' + lowpass2.frequency.value + 'Hz, reverb=' + (3.0 + DEPTH * 3).toFixed(1) + 's, dry=' + dry.gain.value.toFixed(1) + ', wet=' + wet.gain.value.toFixed(1));
+    console.log('[Music] ✓ ЭКСТРЕМАЛЬНЫЕ эффекты: bass=+' + bassBoost.gain.value + 'dB, lowpass=' + lowpass.frequency.value + 'Hz→' + lowpass2.frequency.value + 'Hz, reverb=' + (5.0 + DEPTH * 5).toFixed(1) + 's, dry=' + dry.gain.value.toFixed(2) + ', wet=' + wet.gain.value.toFixed(2));
   }
 
   function fadeTo(value, done) {
