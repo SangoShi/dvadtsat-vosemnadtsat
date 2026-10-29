@@ -811,8 +811,131 @@ input { font: inherit; }
 }
 
 /* ════════════════════════════════════════════════════════════════════════
-   ПЕРСОНАЖИ: ПОЛАРОИДЫ
+   ПЕРСОНАЖИ: HERO БЛОК
    ════════════════════════════════════════════════════════════════════════ */
+.characters-hero {
+  position: relative;
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: var(--sp-xl) var(--sp-md);
+  margin-bottom: var(--sp-lg);
+  background: 
+    linear-gradient(to bottom, 
+      rgba(5, 7, 12, 0.75) 0%, 
+      rgba(5, 7, 12, 0.85) 50%,
+      var(--surf-0) 100%
+    ),
+    url('https://images.unsplash.com/photo-1579762715118-a6f1d4b934f1?w=1600&q=80') center/cover no-repeat;
+  border-radius: 0 0 var(--rad) var(--rad);
+  overflow: hidden;
+}
+
+.hero-eyebrow {
+  font-size: var(--step--1);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.75;
+  margin-bottom: var(--sp-xs);
+  color: var(--c-plum);
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.8rem, 8vw, 4.2rem);
+  font-weight: 600;
+  font-style: italic;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-bottom: var(--sp-sm);
+  text-shadow: 0 4px 24px rgba(0,0,0,0.8);
+}
+
+.hero-lead {
+  max-width: 560px;
+  font-size: var(--step-0);
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   ПЕРСОНАЖИ: ТУЛБАР (Поиск + Фильтры)
+   ════════════════════════════════════════════════════════════════════════ */
+.characters-toolbar {
+  max-width: 1200px;
+  margin: 0 auto var(--sp-md);
+  padding: 0 var(--sp-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+
+.toolbar-search {
+  display: block;
+}
+
+.toolbar-search .search {
+  width: 100%;
+  max-width: 520px;
+  padding: var(--sp-xs) var(--sp-sm);
+  background: var(--surf-1);
+  border: 2px solid color-mix(in srgb, var(--c-cream) 12%, transparent);
+  border-radius: 999px;
+  color: var(--c-cream);
+  font-size: var(--step-0);
+  transition: border-color 0.25s, background 0.25s;
+}
+
+.toolbar-search .search::placeholder {
+  color: color-mix(in srgb, var(--c-cream) 45%, transparent);
+}
+
+.toolbar-search .search:focus {
+  outline: none;
+  border-color: var(--c-plum);
+  background: var(--surf-2);
+}
+
+.toolbar-chips {
+  display: flex;
+  gap: var(--sp-2xs);
+  flex-wrap: wrap;
+}
+
+.toolbar-chips .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3xs);
+  padding: var(--sp-2xs) var(--sp-sm);
+  background: var(--surf-1);
+  border: 2px solid color-mix(in srgb, var(--c-cream) 12%, transparent);
+  border-radius: 999px;
+  font-size: var(--step--1);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--c-cream);
+}
+
+.toolbar-chips .chip:hover {
+  background: var(--surf-2);
+  border-color: color-mix(in srgb, var(--c-cream) 20%, transparent);
+}
+
+.toolbar-chips .chip[aria-pressed="true"] {
+  background: var(--c-plum);
+  color: white;
+  border-color: var(--c-plum);
+}
+
+.toolbar-chips .chip-n {
+  opacity: 0.7;
+  font-weight: 500;
+}
 .person-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 280px));

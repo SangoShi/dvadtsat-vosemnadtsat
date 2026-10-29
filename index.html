@@ -827,18 +827,20 @@
 
     <!-- ПЕРСОНАЖИ -->
     <section class="view" id="view-characters" data-view="characters" aria-labelledby="characters-title" hidden>
-      <div class="page-head">
-        <p class="kicker">все, кто появляется в истории</p>
-        <h2 class="page-title" id="characters-title">Персонажи</h2>
-        <p class="page-intro">Нажмите на фотографию, чтобы открыть анкету.</p>
+      <div class="characters-hero">
+        <p class="hero-eyebrow">Все, кто появляются в истории</p>
+        <h2 class="hero-title" id="characters-title">Персонажи</h2>
+        <p class="hero-lead">Нажмите на фотографию, чтобы открыть анкету.</p>
       </div>
-      <div class="searchrow">
-        <label class="search-wrap">
+      
+      <div class="characters-toolbar">
+        <label class="toolbar-search">
           <span class="sr-only">Поиск по персонажам</span>
           <input class="search" id="search-characters" type="search" placeholder="Имя, прозвище или роль…" autocomplete="off">
         </label>
-        <div class="chips" id="filter-characters" role="group" aria-label="Группа"></div>
+        <div class="toolbar-chips" id="filter-characters" role="group" aria-label="Группа"></div>
       </div>
+      
       <p class="result-note" id="note-characters" aria-live="polite"></p>
       <div class="person-grid" id="list-characters"></div>
       <p class="empty" id="empty-characters" hidden>Тут пусто( Попробуйте другое слово или фильтр.</p>
