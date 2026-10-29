@@ -6,27 +6,25 @@
   Как читать этот файл:
     • Серые пояснения вроде этого — комментарии. Браузер их
       не показывает, они только для тебя.
-    • ВЕСЬ ТЕКСТ (имена, описания, анкеты, хроника, музыка) меняется
+    • ВЕСЬ ТЕКСТ (имена, описания, анкеты, рекомендации, музыка) меняется
       в файле js/data.js, а не здесь. Многие блоки ниже пустые,
       сайт сам заполняет их оттуда.
     • Здесь стоит менять только то, что помечено словом «МОЖНО МЕНЯТЬ».
     • Где что лежит:
         css/style.css   — внешний вид (цвета, шрифты, размеры)
-        js/data.js      — весь текст и пути к картинкам и музыке
+        js/data.js      — весь текст, музыка и файлы для скачивания
+        img/paths.js    — имена всех картинок (самый удобный файл!)
         js/app.js       — логика сайта (лучше не трогать)
         img/            — картинки
         music/          — музыка
+        files/          — файлы для скачивания (персонажи, пресеты…)
     • После любой правки: сохранить файл, залить на GitHub,
       подождать 1–2 минуты и нажать Ctrl+Shift+R на сайте.
 
   КАРТИНКИ, шпаргалка:
-    • Персонажи по бокам на главной → img/hero/left.png и right.png
-      (просто замени файлы с теми же именами, лучше PNG без фона)
-    • Фото персонажей → положи в img/characters/ и впиши путь
-      в поле image у персонажа в js/data.js
-    • Баннер вверху «Персонажей» → img/characters/banner.jpg
-      (см. комментарий у раздела ПЕРСОНАЖИ ниже)
-    • Значок во вкладке браузера → img/favicon.svg
+    • Все картинки (персонажи, баннеры, герои на главной) —
+      в файле img/paths.js. Подробно: КАК_ДОБАВИТЬ_КАРТИНКИ.txt
+    • Значок во вкладке браузера → img/favicon.png
   ════════════════════════════════════════════════════════════════════════
 -->
 <html lang="ru">
@@ -36,12 +34,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0a0a14">
   <!-- МОЖНО МЕНЯТЬ: описание, которое видно в поиске Google и в превью ссылки -->
-  <meta name="description" content="Двадцать-Восемнадцать — история про школу, любовь и свободу. Россия, 2018: персонажи, мир и хроника.">
+  <meta name="description" content="Двадцать-Восемнадцать — история про школу, любовь и свободу. Россия, 2018: персонажи, мир и рекомендации.">
   <!-- МОЖНО МЕНЯТЬ: название на вкладке браузера -->
   <title>Двадцать-Восемнадцать</title>
-  <!-- МОЖНО МЕНЯТЬ: значок на вкладке. Замени файл img/favicon.svg
-       или впиши другой путь (для PNG поменяй type на "image/png") -->
-  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <!-- МОЖНО МЕНЯТЬ: значок на вкладке. Замени файл img/favicon.png -->
+  <link rel="icon" href="img/favicon.png" type="image/png">
 
   <!-- Шрифты Google: Caveat (рукописный), Lora (заголовки), Onest (текст) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -106,7 +103,7 @@
         <a href="#overview" data-view="overview">Главная</a>
         <a href="#characters" data-view="characters">Персонажи</a>
         <a href="#knowledge" data-view="knowledge">Мир</a>
-        <a href="#chronicle" data-view="chronicle">Хроника</a>
+        <a href="#recommendations" data-view="recommendations">Рекомендации</a>
       </nav>
 
       <!-- Тумблер музыки справа.
@@ -128,7 +125,7 @@
 
   <!-- ════════════════════════════════════════════════════════════════════
        ОСНОВНАЯ ЧАСТЬ. Внутри четыре раздела (Главная, Персонажи, Мир,
-       Хроника). На экране всегда виден только один, остальные скрыты.
+       Рекомендации). На экране всегда виден только один, остальные скрыты.
        ════════════════════════════════════════════════════════════════════ -->
   <main id="main" tabindex="-1">
 
@@ -142,8 +139,6 @@
              Пролистай вниз до комментария «КОНЕЦ РИСУНКА ГОРОДА». ── -->
         <div class="hero-scene" aria-hidden="true">
           <div class="sky"></div>
-          <div class="stars"></div>
-          <div class="stars stars-2"></div>
           <div class="aurora">
             <span style="--x:4%;--w:22%;--sk:-16deg;--d:14s;--dx:4%"></span>
             <span style="--x:24%;--w:18%;--sk:-8deg;--d:11s;--dx:-3%"></span>
@@ -854,7 +849,7 @@
         <div class="hero-sticker" aria-hidden="true"><svg><use href="#logo"/></svg></div>
       </div>
 
-      <!-- Ряд из четырёх цифр (сколько персонажей, заметок, событий).
+      <!-- Ряд из четырёх цифр (сколько персонажей, заметок, файлов).
            Первые три считаются сами, четвёртая берётся из
            js/data.js → extraMetric -->
       <div class="metrics" id="metrics"></div>
@@ -873,7 +868,7 @@
       </section>
 
       <!-- Две колонки «Про мир» и «Что было»: сюда сами встают
-           три последние записи из knowledge и chronicle в js/data.js.
+           три последние записи из knowledge и recommendations в js/data.js.
            Заголовки и маленькие надписи над ними МОЖНО МЕНЯТЬ здесь -->
       <section class="section two-col" aria-label="Свежие записи">
         <div class="panel">
@@ -889,21 +884,12 @@
         <div class="panel">
           <div class="panel-head">
             <div>
-              <p class="kicker kicker-rose">из дневника</p>
-              <h3>Что было</h3>
+              <p class="kicker kicker-rose">для Таверны</p>
+              <h3>Рекомендации</h3>
             </div>
-            <a class="section-link" href="#chronicle">Все →</a>
+            <a class="section-link" href="#recommendations">Все →</a>
           </div>
-          <ul class="mini-list" id="featured-chronicle"></ul>
-        </div>
-      </section>
-        <div class="letter">
-          <span class="tape tape-left" aria-hidden="true"></span>
-          <span class="tape tape-right" aria-hidden="true"></span>
-          <h2 class="letter-title" id="about-title"></h2>
-          <div class="prose" id="about-text"></div>
-          <p class="letter-sign" id="about-sign"></p>
-          <div class="sticky-note" id="about-ps"></div>
+          <ul class="mini-list" id="featured-recommendations"></ul>
         </div>
       </section>
     </section>
@@ -938,7 +924,7 @@
       <!-- Строка «найдено столько-то» (появляется сама при поиске) -->
       <p class="result-note" id="note-characters" aria-live="polite"></p>
       <!-- Сетка карточек-полароидов. Пустая: сайт сам заполняет её
-           из js/data.js → characters. Фото каждого персонажа — поле image -->
+           из js/data.js → characters. Фото каждого персонажа — в img/paths.js -->
       <div class="person-grid" id="list-characters"></div>
       <!-- МОЖНО МЕНЯТЬ: текст, если поиск ничего не нашёл -->
       <p class="empty" id="empty-characters" hidden>Тут пусто( Попробуйте другое слово или фильтр.</p>
@@ -973,31 +959,33 @@
     </section>
 
     <!-- ════════════════════════════════════════════════════════════════
-         РАЗДЕЛ 4. ХРОНИКА
-         События добавляются в js/data.js → chronicle,
-         категории-фильтры — в chronicleCategories.
+         РАЗДЕЛ 4. РЕКОМЕНДАЦИИ
+         Файлы для SillyTavern (пресеты, лорбуки и т.п.).
+         Записи добавляются в js/data.js → recommendations,
+         категории-фильтры — в recommendationCategories.
+         Сами файлы кладутся в папку files/recommendations/
          ════════════════════════════════════════════════════════════════ -->
-    <section class="view" id="view-chronicle" data-view="chronicle" aria-labelledby="chronicle-title" hidden>
+    <section class="view" id="view-recommendations" data-view="recommendations" aria-labelledby="recommendations-title" hidden>
       <!-- Баннер вверху раздела.
-           КАРТИНКА баннера меняется в img/paths.js → chronicleBanner
+           КАРТИНКА баннера меняется в img/paths.js → recommendationsBanner
            МОЖНО МЕНЯТЬ: три строки текста внутри баннера -->
-      <div class="chronicle-hero" id="chronicle-hero">
-        <p class="hero-eyebrow">страницы дневника</p>
-        <h2 class="hero-title" id="chronicle-title">Хроника</h2>
-        <p class="hero-lead">Что и когда случилось — по порядку. Звёздочкой отмечены самые важные дни.</p>
+      <div class="recommendations-hero" id="recommendations-hero">
+        <p class="hero-eyebrow">пресеты, лорбуки и всё для Таверны</p>
+        <h2 class="hero-title" id="recommendations-title">Рекомендации</h2>
+        <p class="hero-lead">Нажмите на карточку, чтобы прочитать описание и скачать файл.</p>
       </div>
 
       <!-- Поиск и кнопки-фильтры -->
       <div class="characters-toolbar">
         <label class="toolbar-search">
-          <span class="sr-only">Поиск по хронике</span>
-          <input class="search" id="search-chronicle" type="search" placeholder="Событие или дата…" autocomplete="off">
+          <span class="sr-only">Поиск по рекомендациям</span>
+          <input class="search" id="search-recommendations" type="search" placeholder="Название файла…" autocomplete="off">
         </label>
-        <div class="toolbar-chips" id="filter-chronicle" role="group" aria-label="Категория"></div>
+        <div class="toolbar-chips" id="filter-recommendations" role="group" aria-label="Категория"></div>
       </div>
-      <p class="result-note" id="note-chronicle" aria-live="polite"></p>
-      <ol class="diary" id="list-chronicle"></ol>
-      <p class="empty" id="empty-chronicle" hidden>Тут пусто( Попробуйте другое слово или категорию.</p>
+      <p class="result-note" id="note-recommendations" aria-live="polite"></p>
+      <div class="note-grid" id="list-recommendations"></div>
+      <p class="empty" id="empty-recommendations" hidden>Тут пусто( Попробуйте другое слово или категорию.</p>
     </section>
 
   </main>
@@ -1011,7 +999,7 @@
   </footer>
 
   <!-- ══ ВСПЛЫВАЮЩЕЕ ОКНО: НЕ ТРОГАТЬ ══
-       Открывается при клике на персонажа, заметку или событие.
+       Открывается при клике на персонажа, заметку или рекомендацию.
        Его содержимое (анкета, текст) сайт берёт из js/data.js -->
   <dialog class="modal" id="modal" aria-labelledby="modal-title">
     <div class="sheet" id="modal-sheet">

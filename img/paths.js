@@ -27,9 +27,9 @@ const IMG = {
   // Положи файл в img/knowledge/ и впиши имя:
   knowledgeBanner: "banner.jpg",
 
-  // ── Баннер раздела «Хроника» ──
-  // Положи файл в img/chronicle/ и впиши имя:
-  chronicleBanner: "banner.jpg",
+  // ── Баннер раздела «Рекомендации» ──
+  // Положи файл в img/recommendations/ и впиши имя:
+  recommendationsBanner: "banner.jpg",
 
   // ── Фото персонажей ──
   // Положи файлы в img/characters/ и впиши имена.

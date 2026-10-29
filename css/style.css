@@ -62,12 +62,10 @@ html {
   background: var(--surf-0);
   scrollbar-width: thin;
   scrollbar-color: var(--c-green) var(--surf-2);
-  scroll-behavior: smooth;
+  /* Плавный скролл отключен: используется js/smooth-scroll.js */
 }
 
-html.smooth-scroll {
-  scroll-behavior: smooth;
-}
+/* Старый класс smooth-scroll убираем — теперь обработка в js/smooth-scroll.js */
 
 /* Кастомный скроллбар для webkit */
 ::-webkit-scrollbar {
@@ -367,23 +365,7 @@ input { font: inherit; }
   background: linear-gradient(to bottom, var(--c-night-1) 0%, var(--c-night-2) 60%, var(--c-night-3) 100%);
 }
 
-.stars {
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.6) 1px, transparent 1px);
-  background-size: 128px 128px;
-  background-position: 0 0, 64px 64px;
-}
-
-.stars-2 {
-  animation: stars-drift 120s linear infinite;
-  opacity: 0.7;
-}
-
-@keyframes stars-drift {
-  from { transform: translateX(0); }
-  to { transform: translateX(128px); }
-}
+/* Старые .stars убираем: звёзды рисуются через canvas в js/stars.js */
 
 .aurora {
   position: absolute;
@@ -816,7 +798,7 @@ input { font: inherit; }
    ════════════════════════════════════════════════════════════════════════ */
 .characters-hero,
 .knowledge-hero,
-.chronicle-hero {
+.recommendations-hero {
   position: relative;
   min-height: 380px;
   display: flex;
@@ -838,7 +820,7 @@ input { font: inherit; }
 /* Затемнение поверх картинки, чтобы текст читался */
 .characters-hero::before,
 .knowledge-hero::before,
-.chronicle-hero::before {
+.recommendations-hero::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -850,13 +832,13 @@ input { font: inherit; }
 
 .characters-hero > *,
 .knowledge-hero > *,
-.chronicle-hero > * {
+.recommendations-hero > * {
   position: relative;
 }
 
 .characters-hero .hero-eyebrow,
 .knowledge-hero .hero-eyebrow,
-.chronicle-hero .hero-eyebrow {
+.recommendations-hero .hero-eyebrow {
   font-size: var(--step--1);
   font-weight: 500;
   text-transform: uppercase;
@@ -868,7 +850,7 @@ input { font: inherit; }
 
 .characters-hero .hero-title,
 .knowledge-hero .hero-title,
-.chronicle-hero .hero-title {
+.recommendations-hero .hero-title {
   font-family: var(--font-serif);
   font-size: clamp(2.8rem, 8vw, 4.2rem);
   font-weight: 600;
@@ -881,7 +863,7 @@ input { font: inherit; }
 
 .characters-hero .hero-lead,
 .knowledge-hero .hero-lead,
-.chronicle-hero .hero-lead {
+.recommendations-hero .hero-lead {
   max-width: 560px;
   font-size: var(--step-0);
   line-height: 1.6;
@@ -1661,7 +1643,7 @@ input { font: inherit; }
 
 /* Модальное окно: заметка о мире */
 .modal[data-kind="knowledge"] .sheet,
-.modal[data-kind="chronicle"] .sheet {
+.modal[data-kind="recommendation"] .sheet {
   background: var(--c-cream);
   color: var(--c-black);
 }

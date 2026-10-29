@@ -11,7 +11,7 @@
     return;
   }
 
-  const VIEWS = ["overview", "characters", "knowledge", "chronicle"];
+  const VIEWS = ["overview", "characters", "knowledge", "recommendations"];
   const $ = (id) => document.getElementById(id);
 
   /* ── Текст ───────────────────────────────────────────────────────── */
@@ -67,13 +67,50 @@
   const byId = (list) => Object.fromEntries((list || []).map((x) => [x.id, x]));
   const groups = byId(SITE.characterGroups);
   const kbCats = byId(SITE.knowledgeCategories);
-  const chronCats = byId(SITE.chronicleCategories);
+  const recCats = byId(SITE.recommendationCategories);
 
   const DATA = {
     characters: SITE.characters || [],
     knowledge: SITE.knowledge || [],
-    chronicle: SITE.chronicle || []
+    recommendations: SITE.recommendations || []
   };
+
+  /* ── Картинки и файлы ────────────────────────────────────────────── */
+
+  // Путь к фото персонажа: сначала img/paths.js, потом старое поле image
+  function charImage(c) {
+    const name = typeof IMG !== "undefined" && IMG.characters ? IMG.characters[c.id] : null;
+    if (name) return "img/characters/" + encodeURIComponent(name);
+    if (c.image && String(c.image).trim()) return c.image;
+    return null;
+  }
+
+  function charPhoto(c) {
+    const src = charImage(c);
+    if (src) return `<img src="${esc(src)}" alt="" loading="lazy">`;
+    const ini = initials(c.name);
+    return `<svg aria-hidden="true" focusable="false"><use href="#person"/></svg>${ini ? `<span class="pol-initials">${esc(ini)}</span>` : ""}`;
+  }
+
+  function fileType(name) {
+    const m = String(name || "").match(/\.([a-z0-9]+)$/i);
+    return m ? m[1].toUpperCase() : "";
+  }
+
+  // Кнопка «Скачать». Имя файла берётся из data.js, папка — folder
+  function downloadButton(name, folder) {
+    if (!name) {
+      return `<div class="download"><span class="btn btn-download is-disabled" aria-disabled="true">Файл скоро появится</span></div>`;
+    }
+    const type = fileType(name);
+    return `
+      <div class="download">
+        <a class="btn btn-primary btn-download" href="files/${folder}/${esc(encodeURIComponent(name))}" download="${esc(name)}">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 19h14"/></svg>
+          Скачать${type ? ` <span class="download-type">${esc(type)}</span>` : ""}
+        </a>
+      </div>`;
+  }
 
   function findItem(id) {
     for (const type of Object.keys(DATA)) {
@@ -86,8 +123,6 @@
   /* ── Шаблоны ─────────────────────────────────────────────────────── */
 
   function personCard(c, base) {
-    const hasImage = c.image;
-    const ini = initials(c.name);
     const tag = c.tag ? `<span class="pol-sticker">${rich(c.tag)}</span>` : "";
     const nickname = c.nickname ? `<div class="person-nick">${rich(c.nickname)}</div>` : "";
     const role = c.role ? `<div class="person-role">${rich(c.role)}</div>` : "";
@@ -97,7 +132,7 @@
         <div class="pol-frame">
           <span class="tape" aria-hidden="true"></span>
           <div class="pol-photo">
-            ${hasImage ? `<img src="${esc(c.image)}" alt="" loading="lazy">` : `<svg aria-hidden="true" focusable="false"><use href="#person"/></svg>${ini ? `<span class="pol-initials">${esc(ini)}</span>` : ""}`}
+            ${charPhoto(c)}
             ${tag}
           </div>
           <h3 class="pol-caption">${rich(c.name)}</h3>
@@ -124,19 +159,25 @@
       </a>`;
   }
 
-  function chronCard(e, base) {
-    const cat = chronCats[e.category] || {};
-    const important = e.important ? `<span class="important">★ важное</span>` : "";
-    const tag = e.tag ? `<span>${esc(e.tag)}</span>` : "";
+  function recCard(r, base) {
+    const cat = recCats[r.category] || {};
+    const sub = r.sub ? `<div class="note-sub">${rich(r.sub)}</div>` : "";
+    const type = fileType(r.file);
+    const badge = r.file
+      ? `<span class="file-badge">${esc(type || "файл")}</span>`
+      : `<span class="file-badge is-soon">скоро</span>`;
     return `
-      <li class="diary-item ${toneClass(e.tone)} ${e.important ? "is-important" : ""}">
-        <div class="diary-date">${esc(e.date)}</div>
-        <a class="diary-card" href="${link(base, e.id)}">
-          <div class="diary-meta">${tag}${important}</div>
-          <h3>${rich(e.title)}</h3>
-          <p>${rich(e.short)}</p>
-        </a>
-      </li>`;
+      <a class="note rec ${toneClass(cat.tone)}" href="${link(base, r.id)}">
+        <div class="note-tab" aria-hidden="true"></div>
+        <div class="rec-top">
+          <span class="rec-cat">${esc(cat.label || "")}</span>
+          ${badge}
+        </div>
+        <h3>${rich(r.title)}</h3>
+        ${sub}
+        <div class="note-text">${rich(r.short)}</div>
+        <span class="more">${r.file ? "Открыть и скачать →" : "Подробнее →"}</span>
+      </a>`;
   }
 
   /* ── Вывод главной ───────────────────────────────────────────────── */
@@ -172,7 +213,7 @@
 
     const chars = DATA.characters.length;
     const kb = DATA.knowledge.length;
-    const chron = DATA.chronicle.length;
+    const recs = DATA.recommendations.length;
     const em = SITE.extraMetric || {};
 
     $("metrics").innerHTML = `
@@ -185,20 +226,15 @@
         <span class="metric-label">${plural(kb, "заметка", "заметки", "заметок")} о мире</span>
       </div>
       <div class="metric">
-        <span class="metric-value">${chron}</span>
-        <span class="metric-label">${plural(chron, "событие", "события", "событий")} в хронике</span>
+        <span class="metric-value">${recs}</span>
+        <span class="metric-label">${plural(recs, "файл", "файла", "файлов")} для Таверны</span>
       </div>
       ${em.value ? `<div class="metric"><span class="metric-value">${esc(em.value)}</span><span class="metric-label">${esc(em.label)}</span></div>` : ""}
     `;
 
     $("featured-characters").innerHTML = DATA.characters.slice(0, 3).map((c) => personCard(c, "characters")).join("");
     $("featured-knowledge").innerHTML = DATA.knowledge.slice(-3).reverse().map((k) => `<li><a href="${link("knowledge", k.id)}">${rich(k.title)}</a></li>`).join("");
-    $("featured-chronicle").innerHTML = DATA.chronicle.slice(-3).reverse().map((e) => `<li><a href="${link("chronicle", e.id)}">${rich(e.title)}</a></li>`).join("");
-
-    const a = SITE.about || {};
-    $("about-title").textContent = a.title || "Об истории";
-    $("about-text").innerHTML = paragraphs(a.text);
-    $("about-sign").innerHTML = `— <span class="t-accent">${rich(SITE.author || "████████")}</span>`;
+    $("featured-recommendations").innerHTML = DATA.recommendations.slice(-3).reverse().map((r) => `<li><a href="${link("recommendations", r.id)}">${rich(r.title)}</a></li>`).join("");
 
     $("footer-note").textContent = SITE.footerNote || "";
     $("footer-meta").innerHTML = `${esc(SITE.title)} · ${esc(SITE.author)}`;
@@ -224,11 +260,11 @@
       }
     }
     
-    // Баннер хроники
-    if (IMG.chronicleBanner) {
-      const crBanner = $("chronicle-hero");
-      if (crBanner) {
-        crBanner.style.backgroundImage = `url('img/chronicle/${IMG.chronicleBanner}')`;
+    // Баннер рекомендаций
+    if (IMG.recommendationsBanner) {
+      const recBanner = $("recommendations-hero");
+      if (recBanner) {
+        recBanner.style.backgroundImage = `url('img/recommendations/${IMG.recommendationsBanner}')`;
       }
     }
   }
@@ -244,13 +280,11 @@
 
   function openModal(found, fromNav) {
     const { type, item } = found;
-    modal.dataset.kind = type === "characters" ? "character" : type === "knowledge" ? "knowledge" : "chronicle";
+    modal.dataset.kind = type === "characters" ? "character" : type === "knowledge" ? "knowledge" : "recommendation";
     modalFromNav = fromNav;
-    modalLabel.textContent = type === "characters" ? "Персонаж" : type === "knowledge" ? "Заметка" : "Событие";
+    modalLabel.textContent = type === "characters" ? "Персонаж" : type === "knowledge" ? "Заметка" : "Рекомендация";
 
     if (type === "characters") {
-      const ini = initials(item.name);
-      const hasImage = item.image;
       const nickname = item.nickname ? `<div class="profile-nick">${rich(item.nickname)}</div>` : "";
       const quote = item.quote ? `<div class="profile-quote">${rich(item.quote)}</div>` : "";
       const tag = item.tag ? `<span class="pol-sticker">${rich(item.tag)}</span>` : "";
@@ -270,7 +304,7 @@
               <div class="pol-frame">
                 <span class="tape" aria-hidden="true"></span>
                 <div class="pol-photo">
-                  ${hasImage ? `<img src="${esc(item.image)}" alt="" loading="lazy">` : `<svg aria-hidden="true" focusable="false"><use href="#person"/></svg>${ini ? `<span class="pol-initials">${esc(ini)}</span>` : ""}`}
+                  ${charPhoto(item)}
                   ${tag}
                 </div>
                 <h3 class="pol-caption">${rich(item.name)}</h3>
@@ -280,6 +314,7 @@
               <h2>${rich(item.name)}</h2>
               ${nickname}
               ${quote}
+              ${downloadButton(item.file, "characters")}
             </div>
           </div>
           <div class="prose">${paragraphs(item.text)}</div>
@@ -302,9 +337,9 @@
           ${sections ? `<div class="entry-sections">${sections}</div>` : ""}
         </article>`;
     } else {
-      const important = item.important ? `<span>★ важное</span>` : "";
-      const tag = item.tag ? `<span>${esc(item.tag)}</span>` : "";
-      const meta = important || tag ? `<div class="entry-meta">${important}${tag}</div>` : "";
+      const cat = recCats[item.category] || {};
+      const sub = item.sub ? `<div class="entry-sub">${rich(item.sub)}</div>` : "";
+      const meta = cat.label ? `<div class="entry-meta"><span>${esc(cat.label)}</span></div>` : "";
       let sections = "";
       if (item.sections && item.sections.length) {
         sections = item.sections.map(([title, items]) => {
@@ -315,7 +350,9 @@
       modalContent.innerHTML = `
         <article class="entry">
           <h2>${rich(item.title)}</h2>
+          ${sub}
           ${meta}
+          ${downloadButton(item.file, "recommendations")}
           <div class="prose">${paragraphs(item.text)}</div>
           ${sections ? `<div class="entry-sections">${sections}</div>` : ""}
         </article>`;
@@ -395,7 +432,7 @@
   const VIEW_TITLES = {
     characters: "Персонажи",
     knowledge: "Мир",
-    chronicle: "Хроника"
+    recommendations: "Рекомендации"
   };
 
   function setupList(view) {
@@ -412,7 +449,7 @@
     } else if (view === "knowledge") {
       cfg = { filters: SITE.knowledgeCategories || [], key: "category" };
     } else {
-      cfg = { filters: SITE.chronicleCategories || [], key: "category" };
+      cfg = { filters: SITE.recommendationCategories || [], key: "category" };
     }
 
     const state = { query: "", filter: "" };
@@ -445,7 +482,7 @@
         } else if (view === "knowledge") {
           resultBox.innerHTML = filtered.map((k) => kbCard(k, view)).join("");
         } else {
-          resultBox.innerHTML = filtered.map((e) => chronCard(e, view)).join("");
+          resultBox.innerHTML = filtered.map((r) => recCard(r, view)).join("");
         }
         const total = state.filter ? list.filter((x) => x[cfg.key] === state.filter).length : list.length;
         noteBox.textContent = filtered.length !== total ? `Нашлось ${filtered.length} из ${total}` : "";
@@ -470,25 +507,6 @@
 
   /* ── Старт ───────────────────────────────────────────────────────── */
 
-  // Плавный скролл
-  document.documentElement.classList.add('smooth-scroll');
-  
-  // Улучшенный smooth scroll с CSS Scroll Snap
-  let scrollTimeout;
-  let isScrolling = false;
-  
-  window.addEventListener('wheel', (e) => {
-    if (!isScrolling) {
-      isScrolling = true;
-      document.documentElement.style.scrollBehavior = 'smooth';
-    }
-    
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-      isScrolling = false;
-    }, 150);
-  }, { passive: true });
-
   // Loader
   const loader = $("loader");
   window.addEventListener("load", () => {
@@ -501,7 +519,7 @@
   setupBanners();
   setupList("characters");
   setupList("knowledge");
-  setupList("chronicle");
+  setupList("recommendations");
   route(false);
 
 })();
