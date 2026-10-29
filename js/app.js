@@ -152,10 +152,23 @@
     $("hero-lead").textContent = h.lead || "";
 
     const p = h.portraits || {};
-    $("hero-portraits").innerHTML = ["left", "right"]
-      .filter((side) => p[side])
-      .map((side) => `<img class="hero-portrait hero-portrait-${side}" src="${esc(p[side])}" alt="" onerror="this.remove()">`)
-      .join("");
+    // Два персонажа по бокам (теперь берём из img/paths.js)
+    if (typeof IMG !== "undefined" && IMG.hero) {
+      $("hero-portraits").innerHTML = ["left", "right"]
+        .filter((side) => IMG.hero[side])
+        .map((side) => {
+          const filename = IMG.hero[side];
+          const className = side === "left" ? "hero-portrait-left" : "hero-portrait-right";
+          return `<img class="hero-portrait ${className}" src="img/hero/${esc(filename)}" alt="" onerror="this.remove()">`;
+        })
+        .join("");
+    } else {
+      // Совместимость со старым data.js (если там portraits)
+      $("hero-portraits").innerHTML = ["left", "right"]
+        .filter((side) => p[side])
+        .map((side) => `<img class="hero-portrait hero-portrait-${side}" src="${esc(p[side])}" alt="" onerror="this.remove()">`)
+        .join("");
+    }
 
     const chars = DATA.characters.length;
     const kb = DATA.knowledge.length;
@@ -464,6 +477,7 @@
   });
 
   renderOverview();
+  setupCharactersBanner();
   setupList("characters");
   setupList("knowledge");
   setupList("chronicle");
