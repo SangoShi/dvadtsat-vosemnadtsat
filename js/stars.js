@@ -12,7 +12,7 @@
   let mouseY = -9999;
   
   // Ищем контейнер города
-  const cityContainer = document.querySelector('.city-scene');
+  const cityContainer = document.querySelector('.hero-scene');
   if (!cityContainer) return;
   
   // Создаём canvas для звёзд
