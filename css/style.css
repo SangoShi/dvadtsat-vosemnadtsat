@@ -578,26 +578,20 @@ input { font: inherit; }
 }
 
 .btn-download.is-disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  color: var(--c-muted);
-}
-
-.btn-download .download-type {
-  opacity: 0.7;
-  font-size: 0.9em;
-}
-
-.btn-download.is-disabled {
   background: var(--surf-2);
-  color: var(--c-muted);
+  color: color-mix(in srgb, var(--c-cream) 55%, transparent);
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.75;
 }
 
 .btn-download.is-disabled:hover {
   background: var(--surf-2);
   transform: none;
+}
+
+.btn-download .download-type {
+  opacity: 0.7;
+  font-size: 0.9em;
 }
 
 .download {
