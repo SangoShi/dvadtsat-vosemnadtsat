@@ -77,8 +77,9 @@
 
   /* ── Картинки и файлы ────────────────────────────────────────────── */
 
-  // Путь к фото персонажа: сначала img/paths.js, потом старое поле image
+  // Путь к фото персонажа: сначала c.photo (из per-character файлов), затем img/paths.js, затем старое поле image
   function charImage(c) {
+    if (c.photo && String(c.photo).trim()) return "img/characters/" + encodeURIComponent(c.photo);
     const name = typeof IMG !== "undefined" && IMG.characters ? IMG.characters[c.id] : null;
     if (name) return "img/characters/" + encodeURIComponent(name);
     if (c.image && String(c.image).trim()) return c.image;
