@@ -41,7 +41,7 @@ const SITE = {
   // depth  — «далёкость» от 0 до 1: 0 — обычный звук,
   //          1 — глухо и гулко, будто играет за стеной
   music: {
-    src: "music/track.mp3",
+    src: "music/track.mp3?v=2",
     volume: 0.32,
     depth: 0.8
   },
