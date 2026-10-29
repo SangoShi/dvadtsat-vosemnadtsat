@@ -23,6 +23,14 @@ const IMG = {
   // Положи файл в img/characters/ и впиши имя:
   charactersBanner: "banner.jpg",
 
+  // ── Баннер раздела «Мир» ──
+  // Положи файл в img/knowledge/ и впиши имя:
+  knowledgeBanner: "banner.jpg",
+
+  // ── Баннер раздела «Хроника» ──
+  // Положи файл в img/chronicle/ и впиши имя:
+  chronicleBanner: "banner.jpg",
+
   // ── Фото персонажей ──
   // Положи файлы в img/characters/ и впиши имена.
   // Ключ (слева от двоеточия) — это id персонажа из data.js

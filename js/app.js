@@ -477,7 +477,7 @@
   });
 
   renderOverview();
-  setupCharactersBanner();
+  setupBanners();
   setupList("characters");
   setupList("knowledge");
   setupList("chronicle");

@@ -859,20 +859,6 @@
            js/data.js → extraMetric -->
       <div class="metrics" id="metrics"></div>
 
-      <!-- Письмо «Об истории» сразу после первого экрана.
-           Весь текст письма, подпись и записка-стикер берутся
-           из js/data.js → about и author -->
-      <section class="section" aria-labelledby="about-title">
-        <div class="letter">
-          <span class="tape tape-left" aria-hidden="true"></span>
-          <span class="tape tape-right" aria-hidden="true"></span>
-          <h2 class="letter-title" id="about-title"></h2>
-          <div class="prose" id="about-text"></div>
-          <p class="letter-sign" id="about-sign"></p>
-          <div class="sticky-note" id="about-ps"></div>
-        </div>
-      </section>
-
       <!-- «Главные лица»: сюда сами встают первые три персонажа
            из js/data.js → characters -->
       <section class="section" aria-labelledby="featured-title">
@@ -962,21 +948,24 @@
          РАЗДЕЛ 3. МИР
          Заметки добавляются в js/data.js → knowledge,
          категории-фильтры — в knowledgeCategories.
-         МОЖНО МЕНЯТЬ здесь: три строки заголовка, подсказку в поиске
-         и текст «Тут пусто».
          ════════════════════════════════════════════════════════════════ -->
     <section class="view" id="view-knowledge" data-view="knowledge" aria-labelledby="knowledge-title" hidden>
-      <div class="page-head">
-        <p class="kicker">места, школа и всё вокруг</p>
-        <h2 class="page-title" id="knowledge-title">Мир</h2>
-        <p class="page-intro">Заметки о том, где и как живут герои, и правила игры.</p>
+      <!-- Баннер вверху раздела.
+           КАРТИНКА баннера меняется в img/paths.js → knowledgeBanner
+           МОЖНО МЕНЯТЬ: три строки текста внутри баннера -->
+      <div class="knowledge-hero" id="knowledge-hero">
+        <p class="hero-eyebrow">места, школа и всё вокруг</p>
+        <h2 class="hero-title" id="knowledge-title">Мир</h2>
+        <p class="hero-lead">Заметки о том, где и как живут герои, и правила игры.</p>
       </div>
-      <div class="searchrow">
-        <label class="search-wrap">
+
+      <!-- Поиск и кнопки-фильтры -->
+      <div class="characters-toolbar">
+        <label class="toolbar-search">
           <span class="sr-only">Поиск по заметкам</span>
           <input class="search" id="search-knowledge" type="search" placeholder="Название заметки…" autocomplete="off">
         </label>
-        <div class="chips" id="filter-knowledge" role="group" aria-label="Категория"></div>
+        <div class="toolbar-chips" id="filter-knowledge" role="group" aria-label="Категория"></div>
       </div>
       <p class="result-note" id="note-knowledge" aria-live="polite"></p>
       <div class="note-grid" id="list-knowledge"></div>
@@ -987,21 +976,24 @@
          РАЗДЕЛ 4. ХРОНИКА
          События добавляются в js/data.js → chronicle,
          категории-фильтры — в chronicleCategories.
-         МОЖНО МЕНЯТЬ здесь: три строки заголовка, подсказку в поиске
-         и текст «Тут пусто».
          ════════════════════════════════════════════════════════════════ -->
     <section class="view" id="view-chronicle" data-view="chronicle" aria-labelledby="chronicle-title" hidden>
-      <div class="page-head">
-        <p class="kicker kicker-rose">страницы дневника</p>
-        <h2 class="page-title" id="chronicle-title">Хроника</h2>
-        <p class="page-intro">Что и когда случилось — по порядку. Звёздочкой отмечены самые важные дни.</p>
+      <!-- Баннер вверху раздела.
+           КАРТИНКА баннера меняется в img/paths.js → chronicleBanner
+           МОЖНО МЕНЯТЬ: три строки текста внутри баннера -->
+      <div class="chronicle-hero" id="chronicle-hero">
+        <p class="hero-eyebrow">страницы дневника</p>
+        <h2 class="hero-title" id="chronicle-title">Хроника</h2>
+        <p class="hero-lead">Что и когда случилось — по порядку. Звёздочкой отмечены самые важные дни.</p>
       </div>
-      <div class="searchrow">
-        <label class="search-wrap">
+
+      <!-- Поиск и кнопки-фильтры -->
+      <div class="characters-toolbar">
+        <label class="toolbar-search">
           <span class="sr-only">Поиск по хронике</span>
           <input class="search" id="search-chronicle" type="search" placeholder="Событие или дата…" autocomplete="off">
         </label>
-        <div class="chips" id="filter-chronicle" role="group" aria-label="Категория"></div>
+        <div class="toolbar-chips" id="filter-chronicle" role="group" aria-label="Категория"></div>
       </div>
       <p class="result-note" id="note-chronicle" aria-live="polite"></p>
       <ol class="diary" id="list-chronicle"></ol>
