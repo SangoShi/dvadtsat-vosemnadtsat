@@ -200,16 +200,37 @@
     $("about-text").innerHTML = paragraphs(a.text);
     $("about-sign").innerHTML = `— <span class="t-accent">${rich(SITE.author || "████████")}</span>`;
 
-    // Устанавливаем фон для баннера персонажей из img/paths.js
-    if (typeof IMG !== "undefined" && IMG.charactersBanner) {
-      const banner = $("characters-hero");
-      if (banner) {
-        banner.style.backgroundImage = `url('img/characters/${IMG.charactersBanner}')`;
-      }
-    }
-
     $("footer-note").textContent = SITE.footerNote || "";
     $("footer-meta").innerHTML = `${esc(SITE.title)} · ${esc(SITE.author)}`;
+  }
+
+  // Установка баннеров для всех страниц из img/paths.js
+  function setupBanners() {
+    if (typeof IMG === "undefined") return;
+    
+    // Баннер персонажей
+    if (IMG.charactersBanner) {
+      const chBanner = $("characters-hero");
+      if (chBanner) {
+        chBanner.style.backgroundImage = `url('img/characters/${IMG.charactersBanner}')`;
+      }
+    }
+    
+    // Баннер мира
+    if (IMG.knowledgeBanner) {
+      const kbBanner = $("knowledge-hero");
+      if (kbBanner) {
+        kbBanner.style.backgroundImage = `url('img/knowledge/${IMG.knowledgeBanner}')`;
+      }
+    }
+    
+    // Баннер хроники
+    if (IMG.chronicleBanner) {
+      const crBanner = $("chronicle-hero");
+      if (crBanner) {
+        crBanner.style.backgroundImage = `url('img/chronicle/${IMG.chronicleBanner}')`;
+      }
+    }
   }
 
   /* ── Модалки ─────────────────────────────────────────────────────── */
