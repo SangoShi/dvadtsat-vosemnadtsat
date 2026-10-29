@@ -782,7 +782,7 @@ input { font: inherit; }
 .letter .prose {
   font-size: var(--step-0);
   line-height: 1.7;
-  margin-bottom: var(--sp-md);
+  margin-bottom: var(--sp-xl);
 }
 
 .letter .prose p + p { margin-top: var(--sp-xs); }
@@ -823,18 +823,31 @@ input { font: inherit; }
   text-align: center;
   padding: var(--sp-xl) var(--sp-md);
   margin-bottom: var(--sp-lg);
-  background: 
-    linear-gradient(to bottom, 
-      rgba(5, 7, 12, 0.75) 0%, 
-      rgba(5, 7, 12, 0.85) 50%,
-      var(--surf-0) 100%
-    ),
-    url('https://images.unsplash.com/photo-1579762715118-a6f1d4b934f1?w=1600&q=80') center/cover no-repeat;
+  /* Сама картинка задаётся в index.html (style="background-image: ...") */
+  background-color: var(--surf-1);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   border-radius: 0 0 var(--rad) var(--rad);
   overflow: hidden;
 }
 
-.hero-eyebrow {
+/* Затемнение поверх картинки, чтобы текст читался */
+.characters-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+    rgba(5, 7, 12, 0.75) 0%,
+    rgba(5, 7, 12, 0.85) 50%,
+    var(--surf-0) 100%);
+}
+
+.characters-hero > * {
+  position: relative;
+}
+
+.characters-hero .hero-eyebrow {
   font-size: var(--step--1);
   font-weight: 500;
   text-transform: uppercase;
@@ -844,7 +857,7 @@ input { font: inherit; }
   color: var(--c-plum);
 }
 
-.hero-title {
+.characters-hero .hero-title {
   font-family: var(--font-serif);
   font-size: clamp(2.8rem, 8vw, 4.2rem);
   font-weight: 600;
@@ -855,7 +868,7 @@ input { font: inherit; }
   text-shadow: 0 4px 24px rgba(0,0,0,0.8);
 }
 
-.hero-lead {
+.characters-hero .hero-lead {
   max-width: 560px;
   font-size: var(--step-0);
   line-height: 1.6;

@@ -1,28 +1,71 @@
 <!DOCTYPE html>
+<!--
+  ════════════════════════════════════════════════════════════════════════
+  ДВАДЦАТЬ-ВОСЕМНАДЦАТЬ — каркас сайта
+  ════════════════════════════════════════════════════════════════════════
+  Как читать этот файл:
+    • Серые пояснения вроде этого — комментарии. Браузер их
+      не показывает, они только для тебя.
+    • ВЕСЬ ТЕКСТ (имена, описания, анкеты, хроника, музыка) меняется
+      в файле js/data.js, а не здесь. Многие блоки ниже пустые,
+      сайт сам заполняет их оттуда.
+    • Здесь стоит менять только то, что помечено словом «МОЖНО МЕНЯТЬ».
+    • Где что лежит:
+        css/style.css   — внешний вид (цвета, шрифты, размеры)
+        js/data.js      — весь текст и пути к картинкам и музыке
+        js/app.js       — логика сайта (лучше не трогать)
+        img/            — картинки
+        music/          — музыка
+    • После любой правки: сохранить файл, залить на GitHub,
+      подождать 1–2 минуты и нажать Ctrl+Shift+R на сайте.
+
+  КАРТИНКИ, шпаргалка:
+    • Персонажи по бокам на главной → img/hero/left.png и right.png
+      (просто замени файлы с теми же именами, лучше PNG без фона)
+    • Фото персонажей → положи в img/characters/ и впиши путь
+      в поле image у персонажа в js/data.js
+    • Баннер вверху «Персонажей» → img/characters/banner.jpg
+      (см. комментарий у раздела ПЕРСОНАЖИ ниже)
+    • Значок во вкладке браузера → img/favicon.svg
+  ════════════════════════════════════════════════════════════════════════
+-->
 <html lang="ru">
 <head>
+  <!-- ══ НАСТРОЙКИ СТРАНИЦЫ (вкладка браузера, поиск, шрифты) ══ -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0a0a14">
+  <!-- МОЖНО МЕНЯТЬ: описание, которое видно в поиске Google и в превью ссылки -->
   <meta name="description" content="Двадцать-Восемнадцать — история про школу, любовь и свободу. Россия, 2018: персонажи, мир и хроника.">
+  <!-- МОЖНО МЕНЯТЬ: название на вкладке браузера -->
   <title>Двадцать-Восемнадцать</title>
+  <!-- МОЖНО МЕНЯТЬ: значок на вкладке. Замени файл img/favicon.svg
+       или впиши другой путь (для PNG поменяй type на "image/png") -->
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 
+  <!-- Шрифты Google: Caveat (рукописный), Lora (заголовки), Onest (текст) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Lora:ital,wght@0,500;0,600;1,500;1,600&family=Onest:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <!-- ══ ЭКРАН ЗАГРУЗКИ (виден первые ~3 секунды) ══ -->
   <div class="loader" id="loader">
     <div class="loader-content">
       <svg class="loader-logo" aria-hidden="true" focusable="false"><use href="#logo"/></svg>
+      <!-- МОЖНО МЕНЯТЬ: две надписи на экране загрузки -->
       <div class="loader-text">Двадцать-Восемнадцать</div>
       <div class="loader-sub">Загрузка...</div>
       <div class="loader-bar"><div class="loader-fill"></div></div>
     </div>
   </div>
 
+  <!-- ══ ИКОНКИ: НЕ ТРОГАТЬ ══
+       Тут нарисованы логотип 20/18 (id="logo") и белый силуэт человека
+       (id="person"), он стоит на карточках персонажей без фото.
+       Длинные строки цифр — это сам рисунок. Логотип используется
+       в нескольких местах сайта, поэтому он хранится здесь один раз. -->
   <svg class="sprite" aria-hidden="true" focusable="false">
     <symbol id="logo" viewBox="120 75 1760 1760" fill="currentColor" fill-rule="evenodd">
       <path d="M814.44,189.46c2.52,27.16,14.94,53.08,18.47,80.17,15.91,53.78,29.59,108.42,43.86,162.73l125.87,42.55c1.57.48,2.38,1.42,2.9,2.96,2.15,6.3,3.89,28.83,4.31,36.71,2.8,52.17-2.55,106.14-6.08,158.15-2.96,8.52-22.37,21.26-30.43,26.21-83.44,51.22-181.29,88.37-264.15,142.1l-39.26,26.14c111.67-20.89,221.21-50.57,328.86-86.08,1.4.23,4.73,8.99,5,11.02,2.85,21.19,1.35,44.98,1.98,66.37.37,12.35,5.57,40.46.6,51.22-5.42,11.73-79.02,37.08-94.65,42.07-124.36,39.71-249.18,52.59-375.1,79.98-77.13,16.78-92.06,46.7-148.99,89.3-26.01,19.46-55.56,29.28-86.74,36.18-35.15-18.07-66.3-42.29-98.53-64.66-5.04-3.49-12.86-7.03-17.81-10.52-4.08-2.88-5.99-8.78-12.69-7.84-4.63-4.88,26.75-19.56,29.82-21.5,112.28-71.15,226.26-154.45,302.41-266.36,112.88-56.82,222.58-118.85,331.51-183.1l-.19-7.09c-17.3-14.44-33.33-30.18-52.34-42.49-5.12-1.79-35.18,14.71-41.95,18.54-20.3,11.48-39.97,26.57-59.01,39.07-54.71,35.92-108.79,72.3-159.59,113.38l-15.2-.54-179.21-34.67c-1.01-4.41.65-3.17,2.44-4.47,16.04-11.7,37.09-19.89,54-29.89,88.15-52.16,157.17-98.75,230.65-169.83,3.79-3.67,7.57-1.18,5.39-9.08-13.69-34.35-33.43-65.4-54.26-95.79-11.48-16.76-26.76-33.12-37.86-50.46-1.29-2.02-8.09-12.44-6.99-13.49l105.38,34.25c10.16.44,77.11,23.26,80.13,20.43.32-.3.49-5.55,2.23-8.51,29.91-50.82,59.06-102.34,89.22-152.99,1.32-2.22,13.03-23.71,15.98-20.13Z" />
@@ -36,19 +79,29 @@
     </symbol>
   </svg>
 
+  <!-- Скрытая ссылка для тех, кто ходит по сайту клавишей Tab -->
   <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <!-- Лёгкий «зернистый» шум поверх всего сайта, как на плёнке -->
   <div class="grain" aria-hidden="true"></div>
 
+  <!-- ════════════════════════════════════════════════════════════════════
+       ШАПКА САЙТА: логотип, меню и тумблер музыки
+       ════════════════════════════════════════════════════════════════════ -->
   <header class="site-header">
     <div class="header-inner">
+      <!-- Логотип и название слева. Клик ведёт на главную -->
       <a class="brand" href="#overview" aria-label="Двадцать-Восемнадцать — на главную">
         <svg class="brand-logo" aria-hidden="true" focusable="false"><use href="#logo"/></svg>
         <span class="brand-text">
+          <!-- МОЖНО МЕНЯТЬ: название в шапке -->
           <span class="brand-name">Двадцать-Восемнадцать</span>
+          <!-- Подпись под названием берётся из js/data.js → subtitle -->
           <span class="brand-sub" id="brand-sub"></span>
         </span>
       </a>
 
+      <!-- Меню. МОЖНО МЕНЯТЬ только слова между > и </a>.
+           href и data-view не трогай, по ним сайт понимает, что открыть -->
       <nav class="nav" aria-label="Разделы">
         <a href="#overview" data-view="overview">Главная</a>
         <a href="#characters" data-view="characters">Персонажи</a>
@@ -56,6 +109,11 @@
         <a href="#chronicle" data-view="chronicle">Хроника</a>
       </nav>
 
+      <!-- Тумблер музыки справа.
+           Сам трек, громкость и название «сейчас играет» меняются
+           в js/data.js (поля music и nowPlaying). Файл песни лежит
+           в music/track.mp3. Если заменишь файл, поменяй в data.js
+           ?v=2 на ?v=3, чтобы браузер не играл старую песню из памяти -->
       <button class="now-playing" type="button" id="music-toggle" role="switch" aria-checked="false" aria-label="Фоновая музыка">
         <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         <span class="np-text">
@@ -68,11 +126,20 @@
     </div>
   </header>
 
+  <!-- ════════════════════════════════════════════════════════════════════
+       ОСНОВНАЯ ЧАСТЬ. Внутри четыре раздела (Главная, Персонажи, Мир,
+       Хроника). На экране всегда виден только один, остальные скрыты.
+       ════════════════════════════════════════════════════════════════════ -->
   <main id="main" tabindex="-1">
 
-    <!-- ГЛАВНАЯ -->
+    <!-- ════════════════════════════════════════════════════════════════
+         РАЗДЕЛ 1. ГЛАВНАЯ
+         ════════════════════════════════════════════════════════════════ -->
     <section class="view" id="view-overview" data-view="overview" aria-labelledby="hero-title">
       <div class="hero">
+        <!-- ── Ночной город на фоне (небо, звёзды, сияние, луна, дома).
+             ДАЛЬШЕ ИДУТ ~670 СТРОК РИСУНКА ГОРОДА: НЕ ТРОГАТЬ.
+             Пролистай вниз до комментария «КОНЕЦ РИСУНКА ГОРОДА». ── -->
         <div class="hero-scene" aria-hidden="true">
           <div class="sky"></div>
           <div class="stars"></div>
@@ -760,25 +827,54 @@
           <rect class="ground" x="0" y="293" width="1200" height="7"/>
           </svg>
         </div>
+        <!-- ── КОНЕЦ РИСУНКА ГОРОДА ── -->
 
+        <!-- Два персонажа по бокам заголовка.
+             КАРТИНКИ: img/hero/left.png и img/hero/right.png.
+             Замени файлы на свои с теми же именами (лучше PNG без фона).
+             Другие пути можно вписать в js/data.js → hero → portraits -->
         <div class="hero-portraits" id="hero-portraits" aria-hidden="true"></div>
 
+        <!-- Текст первого экрана. Блоки пустые, потому что текст
+             подставляется из js/data.js → hero (eyebrow, tagline, lead),
+             а большой заголовок — из title -->
         <div class="hero-copy">
           <p class="hero-eyebrow" id="hero-eyebrow"></p>
           <h1 id="hero-title"></h1>
           <p class="hero-tagline" id="hero-tagline"></p>
           <p class="hero-lead" id="hero-lead"></p>
+          <!-- МОЖНО МЕНЯТЬ: надписи на двух кнопках -->
           <div class="hero-actions">
             <a class="btn btn-primary" href="#characters">Познакомиться с героями</a>
             <a class="btn btn-ghost" href="#knowledge">О мире</a>
           </div>
         </div>
 
+        <!-- Наклейка-логотип в углу первого экрана -->
         <div class="hero-sticker" aria-hidden="true"><svg><use href="#logo"/></svg></div>
       </div>
 
+      <!-- Ряд из четырёх цифр (сколько персонажей, заметок, событий).
+           Первые три считаются сами, четвёртая берётся из
+           js/data.js → extraMetric -->
       <div class="metrics" id="metrics"></div>
 
+      <!-- Письмо «Об истории» сразу после первого экрана.
+           Весь текст письма, подпись и записка-стикер берутся
+           из js/data.js → about и author -->
+      <section class="section" aria-labelledby="about-title">
+        <div class="letter">
+          <span class="tape tape-left" aria-hidden="true"></span>
+          <span class="tape tape-right" aria-hidden="true"></span>
+          <h2 class="letter-title" id="about-title"></h2>
+          <div class="prose" id="about-text"></div>
+          <p class="letter-sign" id="about-sign"></p>
+          <div class="sticky-note" id="about-ps"></div>
+        </div>
+      </section>
+
+      <!-- «Главные лица»: сюда сами встают первые три персонажа
+           из js/data.js → characters -->
       <section class="section" aria-labelledby="featured-title">
         <div class="section-head">
           <div>
@@ -790,6 +886,9 @@
         <div class="person-grid" id="featured-characters"></div>
       </section>
 
+      <!-- Две колонки «Про мир» и «Что было»: сюда сами встают
+           три последние записи из knowledge и chronicle в js/data.js.
+           Заголовки и маленькие надписи над ними МОЖНО МЕНЯТЬ здесь -->
       <section class="section two-col" aria-label="Свежие записи">
         <div class="panel">
           <div class="panel-head">
@@ -812,8 +911,6 @@
           <ul class="mini-list" id="featured-chronicle"></ul>
         </div>
       </section>
-
-      <section class="section" aria-labelledby="about-title">
         <div class="letter">
           <span class="tape tape-left" aria-hidden="true"></span>
           <span class="tape tape-right" aria-hidden="true"></span>
@@ -825,14 +922,28 @@
       </section>
     </section>
 
-    <!-- ПЕРСОНАЖИ -->
+    <!-- ════════════════════════════════════════════════════════════════
+         РАЗДЕЛ 2. ПЕРСОНАЖИ
+         Сами карточки персонажей добавляются и меняются
+         в js/data.js → characters. Кнопки-фильтры («Главные»,
+         «Второстепенные») — там же, в characterGroups.
+         ════════════════════════════════════════════════════════════════ -->
     <section class="view" id="view-characters" data-view="characters" aria-labelledby="characters-title" hidden>
-      <div class="characters-hero">
+      <!-- Баннер вверху раздела.
+           КАРТИНКА: сейчас стоит временная картинка из интернета.
+           Чтобы поставить свою:
+             1) положи файл в папку img/characters/ (например banner.jpg);
+             2) замени адрес в url('...') ниже на url('img/characters/banner.jpg').
+           Кавычки и скобки оставь как есть.
+           МОЖНО МЕНЯТЬ: три строки текста внутри баннера -->
+      <div class="characters-hero" style="background-image: url('https://images.unsplash.com/photo-1579762715118-a6f1d4b934f1?w=1600&q=80');">
         <p class="hero-eyebrow">Все, кто появляются в истории</p>
         <h2 class="hero-title" id="characters-title">Персонажи</h2>
         <p class="hero-lead">Нажмите на фотографию, чтобы открыть анкету.</p>
       </div>
-      
+
+      <!-- Поиск и кнопки-фильтры. МОЖНО МЕНЯТЬ: серый текст-подсказка
+           в поле поиска (placeholder="..."). Кнопки появляются сами -->
       <div class="characters-toolbar">
         <label class="toolbar-search">
           <span class="sr-only">Поиск по персонажам</span>
@@ -840,13 +951,23 @@
         </label>
         <div class="toolbar-chips" id="filter-characters" role="group" aria-label="Группа"></div>
       </div>
-      
+
+      <!-- Строка «найдено столько-то» (появляется сама при поиске) -->
       <p class="result-note" id="note-characters" aria-live="polite"></p>
+      <!-- Сетка карточек-полароидов. Пустая: сайт сам заполняет её
+           из js/data.js → characters. Фото каждого персонажа — поле image -->
       <div class="person-grid" id="list-characters"></div>
+      <!-- МОЖНО МЕНЯТЬ: текст, если поиск ничего не нашёл -->
       <p class="empty" id="empty-characters" hidden>Тут пусто( Попробуйте другое слово или фильтр.</p>
     </section>
 
-    <!-- МИР -->
+    <!-- ════════════════════════════════════════════════════════════════
+         РАЗДЕЛ 3. МИР
+         Заметки добавляются в js/data.js → knowledge,
+         категории-фильтры — в knowledgeCategories.
+         МОЖНО МЕНЯТЬ здесь: три строки заголовка, подсказку в поиске
+         и текст «Тут пусто».
+         ════════════════════════════════════════════════════════════════ -->
     <section class="view" id="view-knowledge" data-view="knowledge" aria-labelledby="knowledge-title" hidden>
       <div class="page-head">
         <p class="kicker">места, школа и всё вокруг</p>
@@ -865,7 +986,13 @@
       <p class="empty" id="empty-knowledge" hidden>Тут пусто( Попробуйте другое слово или категорию.</p>
     </section>
 
-    <!-- ХРОНИКА -->
+    <!-- ════════════════════════════════════════════════════════════════
+         РАЗДЕЛ 4. ХРОНИКА
+         События добавляются в js/data.js → chronicle,
+         категории-фильтры — в chronicleCategories.
+         МОЖНО МЕНЯТЬ здесь: три строки заголовка, подсказку в поиске
+         и текст «Тут пусто».
+         ════════════════════════════════════════════════════════════════ -->
     <section class="view" id="view-chronicle" data-view="chronicle" aria-labelledby="chronicle-title" hidden>
       <div class="page-head">
         <p class="kicker kicker-rose">страницы дневника</p>
@@ -886,12 +1013,17 @@
 
   </main>
 
+  <!-- ══ ПОДВАЛ (самый низ страницы) ══
+       Подпись берётся из js/data.js → footerNote, ниже — title и author -->
   <footer class="site-footer">
     <svg class="footer-logo" aria-hidden="true" focusable="false"><use href="#logo"/></svg>
     <p class="footer-note" id="footer-note"></p>
     <p class="footer-meta" id="footer-meta"></p>
   </footer>
 
+  <!-- ══ ВСПЛЫВАЮЩЕЕ ОКНО: НЕ ТРОГАТЬ ══
+       Открывается при клике на персонажа, заметку или событие.
+       Его содержимое (анкета, текст) сайт берёт из js/data.js -->
   <dialog class="modal" id="modal" aria-labelledby="modal-title">
     <div class="sheet" id="modal-sheet">
       <div class="sheet-head">
@@ -904,6 +1036,12 @@
     </div>
   </dialog>
 
+  <!-- ══ СКРИПТЫ: НЕ ТРОГАТЬ И НЕ МЕНЯТЬ ПОРЯДОК ══
+       data.js должен идти первым: остальные файлы берут из него текст.
+         data.js          — весь текст сайта (его и редактируй)
+         smooth-scroll.js — плавная прокрутка колёсиком
+         app.js           — собирает страницы из data.js
+         music.js         — фоновая музыка и тумблер -->
   <script src="js/data.js"></script>
   <script src="js/smooth-scroll.js"></script>
   <script src="js/app.js"></script>
