@@ -222,18 +222,13 @@
     render();
     try { localStorage.setItem(KEY, "off"); } catch (e) {}
     
-    // Мгновенная остановка
-    audio.pause();
-    
-    if (master) {
-      const now = ctx.currentTime;
-      master.gain.cancelScheduledValues(now);
-      master.gain.setValueAtTime(0, now);
-    } else {
-      audio.volume = 0;
-    }
-    
-    console.log('[Music] ⏸ Остановлено мгновенно');
+    // Плавное затухание перед остановкой
+    fadeTo(0, () => {
+      if (!playing) {
+        audio.pause();
+        console.log('[Music] ⏸ Остановлено после затухания');
+      }
+    });
   }
 
   toggle.addEventListener("click", () => {
