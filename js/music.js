@@ -245,16 +245,19 @@
     console.error("[Music] Ошибка загрузки:", audio.error ? audio.error.message : e);
   });
 
-  audio.addEventListener("canplaythrough", function handler() {
-    console.log('[Music] Аудио готово к воспроизведению');
-    audio.removeEventListener("canplaythrough", handler);
-    
-    // Автовоспроизведение через 100мс после загрузки
-    setTimeout(() => {
-      console.log('[Music] Попытка автовоспроизведения...');
-      play();
-    }, 100);
+  audio.addEventListener("loadeddata", function handler() {
+    console.log('[Music] Первые данные загружены, запуск автовоспроизведения...');
+    audio.removeEventListener("loadeddata", handler);
+    play();
   }, { once: true });
 
-  console.log('[Music] Скрипт инициализирован, автовоспроизведение через 100мс после загрузки');
+  // Если loadeddata не сработает, попробуем через canplay
+  audio.addEventListener("canplay", function handler() {
+    console.log('[Music] canplay событие, проверка автозапуска...');
+    if (!playing) {
+      play();
+    }
+  }, { once: true });
+
+  console.log('[Music] Скрипт инициализирован, автовоспроизведение при первых данных');
 })();
