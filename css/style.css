@@ -415,6 +415,7 @@ input { font: inherit; }
   fill: currentColor;
   stroke: none;
   opacity: 0.4;
+  z-index: 10;  /* город поверх звёзд */
   animation: city-drift 15s ease-in-out infinite alternate;
 }
 
