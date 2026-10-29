@@ -248,7 +248,13 @@
   audio.addEventListener("canplaythrough", function handler() {
     console.log('[Music] Аудио готово к воспроизведению');
     audio.removeEventListener("canplaythrough", handler);
+    
+    // Автовоспроизведение через 100мс после загрузки
+    setTimeout(() => {
+      console.log('[Music] Попытка автовоспроизведения...');
+      play();
+    }, 100);
   }, { once: true });
 
-  console.log('[Music] Скрипт инициализирован, ожидание клика на тумблер');
+  console.log('[Music] Скрипт инициализирован, автовоспроизведение через 100мс после загрузки');
 })();
