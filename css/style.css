@@ -415,7 +415,8 @@ input { font: inherit; }
   fill: currentColor;
   stroke: none;
   opacity: 0.4;
-  z-index: 10;  /* город поверх звёзд */
+  z-index: 1;  /* город поверх звёзд, но под текстом и кнопками */
+  pointer-events: none;  /* город не перехватывает клики */
   animation: city-drift 15s ease-in-out infinite alternate;
 }
 

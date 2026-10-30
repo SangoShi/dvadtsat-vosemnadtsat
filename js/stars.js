@@ -23,7 +23,7 @@
   canvas.style.width = '100%';
   canvas.style.height = '100%';
   canvas.style.pointerEvents = 'none';
-  canvas.style.zIndex = '2';  // звёзды поверх неба, но под городом
+  canvas.style.zIndex = '0';  // звёзды поверх неба, но под городом и кнопками
   // Вставляем canvas после .sky, чтобы небо не закрывало его
   const sky = cityContainer.querySelector('.sky');
   if (sky && sky.nextSibling) {
