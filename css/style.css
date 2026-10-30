@@ -600,6 +600,27 @@ input { font: inherit; }
   margin-bottom: var(--sp-md);
 }
 
+.playlist {
+  margin-top: var(--sp-md);
+  margin-bottom: var(--sp-md);
+}
+
+.btn-playlist {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-playlist svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .btn-ghost {
   background: color-mix(in srgb, var(--c-cream) 18%, transparent);
   color: var(--c-cream);
@@ -1657,11 +1678,13 @@ input { font: inherit; }
   filter: grayscale(0%) contrast(1) brightness(1);  /* в модалке цветное */
 }
 
-.profile-top .download {
+.profile-top .download,
+.profile-top .playlist {
   flex: 1 1 200px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  margin: 0;
 }
 
 /* Баннер персонажа */

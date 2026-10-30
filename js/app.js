@@ -113,6 +113,27 @@
       </div>`;
   }
 
+  // Кнопка «Слушать». Ссылка на плейлист из Яндекс.Музыки
+  function playlistButton(url) {
+    if (!url) return "";
+    // Проверяем, что это ссылка на Яндекс.Музыку
+    try {
+      const link = new URL(url);
+      if (!link.hostname.includes("music.yandex")) {
+        return "";
+      }
+    } catch {
+      return "";
+    }
+    return `
+      <div class="playlist">
+        <a class="btn btn-primary btn-playlist" href="${esc(url)}" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16m-7 6h7M4 3v15a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3"/></svg>
+          Плейлист
+        </a>
+      </div>`;
+  }
+
   function findItem(id) {
     for (const type of Object.keys(DATA)) {
       const item = DATA[type].find((x) => x.id === id);
@@ -330,6 +351,7 @@
               </div>
             </div>
             ${downloadButton(item.file, "characters")}
+            ${playlistButton(item.playlist)}
           </div>
           ${bannerHTML}
           ${galleryHTML}

@@ -10,6 +10,7 @@ SITE.characters.push({
   photo: null,  // когда появится картинка, впиши сюда имя файла
   banner: null,  // широкий баннер (например, "banner-006.jpg")
   gallery: [null, null, null, null, null, null],  // массив из 6 файлов для галереи 3×2
+  playlist: null,  // ссылка на плейлист из Яндекс.Музыки
   quote: "",
   short: "Анкета ещё не заполнена.",
   text: "████ ██████████ ███ ████████ ██████.",
