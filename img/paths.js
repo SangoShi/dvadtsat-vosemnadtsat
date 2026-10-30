@@ -25,7 +25,7 @@ const IMG = {
 
   // ── Баннер раздела «Мир» ──
   // Положи файл в img/knowledge/ и впиши имя:
-  knowledgeBanner: "banner.jpg",
+  knowledgeBanner: "knowledgeBanner.jpg",
 
   // ── Баннер раздела «Рекомендации» ──
   // Положи файл в img/recommendations/ и впиши имя:
