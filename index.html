@@ -6,7 +6,7 @@
   Как читать этот файл:
     • Серые пояснения вроде этого — комментарии. Браузер их
       не показывает, они только для тебя.
-    • ВЕСЬ ТЕКСТ (имена, описания, анкеты, рекомендации, музыка) меняется
+    • ВЕСЬ ТЕКСТ (имена, описания, анкеты, файлы, музыка) меняется
       в файле js/data.js, а не здесь. Многие блоки ниже пустые,
       сайт сам заполняет их оттуда.
     • Здесь стоит менять только то, что помечено словом «МОЖНО МЕНЯТЬ».
@@ -34,7 +34,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0a0a14">
   <!-- МОЖНО МЕНЯТЬ: описание, которое видно в поиске Google и в превью ссылки -->
-  <meta name="description" content="Двадцать-Восемнадцать — история про школу, любовь и свободу. Россия, 2018: персонажи, мир и рекомендации.">
+  <meta name="description" content="Двадцать-Восемнадцать — история про школу, любовь и свободу. Россия, 2018: персонажи, мир и файлы.">
   <!-- МОЖНО МЕНЯТЬ: название на вкладке браузера -->
   <title>Двадцать-Восемнадцать</title>
   <!-- МОЖНО МЕНЯТЬ: значок на вкладке. Замени файл img/favicon.png -->
@@ -103,7 +103,7 @@
         <a href="#overview" data-view="overview">Главная</a>
         <a href="#characters" data-view="characters">Персонажи</a>
         <a href="#knowledge" data-view="knowledge">Мир</a>
-        <a href="#recommendations" data-view="recommendations">Рекомендации</a>
+        <a href="#recommendations" data-view="recommendations">Файлы</a>
       </nav>
 
       <!-- Тумблер музыки справа.
@@ -125,7 +125,7 @@
 
   <!-- ════════════════════════════════════════════════════════════════════
        ОСНОВНАЯ ЧАСТЬ. Внутри четыре раздела (Главная, Персонажи, Мир,
-       Рекомендации). На экране всегда виден только один, остальные скрыты.
+       Файлы). На экране всегда виден только один, остальные скрыты.
        ════════════════════════════════════════════════════════════════════ -->
   <main id="main" tabindex="-1">
 
@@ -885,7 +885,7 @@
           <div class="panel-head">
             <div>
               <p class="kicker kicker-rose">для Таверны</p>
-              <h3>Рекомендации</h3>
+              <h3>Файлы</h3>
             </div>
             <a class="section-link" href="#recommendations">Все →</a>
           </div>
@@ -971,14 +971,14 @@
            МОЖНО МЕНЯТЬ: три строки текста внутри баннера -->
       <div class="recommendations-hero" id="recommendations-hero">
         <p class="hero-eyebrow">пресеты, лорбуки и всё для Таверны</p>
-        <h2 class="hero-title" id="recommendations-title">Рекомендации</h2>
+        <h2 class="hero-title" id="recommendations-title">Файлы</h2>
         <p class="hero-lead">Нажмите на карточку, чтобы прочитать описание и скачать файл.</p>
       </div>
 
       <!-- Поиск и кнопки-фильтры -->
       <div class="characters-toolbar">
         <label class="toolbar-search">
-          <span class="sr-only">Поиск по рекомендациям</span>
+          <span class="sr-only">Поиск файлов</span>
           <input class="search" id="search-recommendations" type="search" placeholder="Название файла…" autocomplete="off">
         </label>
         <div class="toolbar-chips" id="filter-recommendations" role="group" aria-label="Категория"></div>
@@ -999,7 +999,7 @@
   </footer>
 
   <!-- ══ ВСПЛЫВАЮЩЕЕ ОКНО: НЕ ТРОГАТЬ ══
-       Открывается при клике на персонажа, заметку или рекомендацию.
+       Открывается при клике на персонажа, заметку или файл.
        Его содержимое (анкета, текст) сайт берёт из js/data.js -->
   <dialog class="modal" id="modal" aria-labelledby="modal-title">
     <div class="sheet" id="modal-sheet">

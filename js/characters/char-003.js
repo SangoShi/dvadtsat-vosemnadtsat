@@ -8,6 +8,8 @@ SITE.characters.push({
   tone: "neutral",
   group: "main",
   photo: null,  // когда появится картинка, впиши сюда имя файла
+  banner: null,  // широкий баннер (например, "banner-003.jpg")
+  gallery: [null, null, null, null, null, null],  // массив из 6 файлов для галереи 3×2
   quote: "",
   short: "Анкета ещё не заполнена.",
   text: "Короткая история персонажа. ████ ██████████ ███ ████████ ██████ ████.",

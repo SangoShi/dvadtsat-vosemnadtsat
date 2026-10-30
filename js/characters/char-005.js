@@ -8,6 +8,8 @@ SITE.characters.push({
   tone: "red",
   group: "side",
   photo: null,  // когда появится картинка, впиши сюда имя файла
+  banner: null,  // широкий баннер (например, "banner-005.jpg")
+  gallery: [null, null, null, null, null, null],  // массив из 6 файлов для галереи 3×2
   quote: "",
   short: "Про этого человека лучше не спрашивать. Пока.",
   text: "██████ ████████ ███ ██████████ ████.",

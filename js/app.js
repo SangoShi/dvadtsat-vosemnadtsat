@@ -261,7 +261,7 @@
       }
     }
     
-    // Баннер рекомендаций
+    // Баннер файлов
     if (IMG.recommendationsBanner) {
       const recBanner = $("recommendations-hero");
       if (recBanner) {
@@ -283,7 +283,7 @@
     const { type, item } = found;
     modal.dataset.kind = type === "characters" ? "character" : type === "knowledge" ? "knowledge" : "recommendation";
     modalFromNav = fromNav;
-    modalLabel.textContent = type === "characters" ? "Персонаж" : type === "knowledge" ? "Заметка" : "Рекомендация";
+    modalLabel.textContent = type === "characters" ? "Персонаж" : type === "knowledge" ? "Заметка" : "Файл";
 
     if (type === "characters") {
       const nickname = item.nickname ? `<div class="profile-nick">${rich(item.nickname)}</div>` : "";
@@ -298,9 +298,27 @@
         }).join("");
       }
 
+      // Баннер персонажа
+      const bannerSrc = item.banner ? `img/characters/${esc(encodeURIComponent(item.banner))}` : null;
+      const bannerHTML = bannerSrc 
+        ? `<div class="profile-banner"><img src="${bannerSrc}" alt="" loading="lazy"></div>` 
+        : `<div class="profile-banner profile-banner-placeholder"><span>картинка</span></div>`;
+
+      // Галерея 3×2
+      const gallery = item.gallery && Array.isArray(item.gallery) ? item.gallery.slice(0, 6) : [];
+      const galleryHTML = gallery.length 
+        ? `<div class="profile-gallery">${gallery.map((img) => {
+            if (img) {
+              const src = `img/characters/${esc(encodeURIComponent(img))}`;
+              return `<div class="gallery-cell"><img src="${src}" alt="" loading="lazy"></div>`;
+            }
+            return `<div class="gallery-cell gallery-cell-placeholder"></div>`;
+          }).join("")}</div>` 
+        : "";
+
       modalContent.innerHTML = `
         <article class="profile">
-          <div class="profile-header">
+          <div class="profile-top">
             <div class="profile-pol">
               <div class="pol-frame">
                 <span class="tape" aria-hidden="true"></span>
@@ -311,12 +329,14 @@
                 <h3 class="pol-caption">${rich(item.name)}</h3>
               </div>
             </div>
-            <div class="profile-intro">
-              <h2>${rich(item.name)}</h2>
-              ${nickname}
-              ${quote}
-              ${downloadButton(item.file, "characters")}
-            </div>
+            ${downloadButton(item.file, "characters")}
+          </div>
+          ${bannerHTML}
+          ${galleryHTML}
+          <div class="profile-body">
+            <h2 class="profile-name">${rich(item.name)}</h2>
+            ${nickname}
+            ${quote}
           </div>
           <div class="prose">${paragraphs(item.text)}</div>
           ${sections ? `<div class="anketa">${sections}</div>` : ""}
@@ -433,7 +453,7 @@
   const VIEW_TITLES = {
     characters: "Персонажи",
     knowledge: "Мир",
-    recommendations: "Рекомендации"
+    recommendations: "Файлы"
   };
 
   function setupList(view) {
@@ -482,6 +502,26 @@
           resultBox.innerHTML = filtered.map((c) => personCard(c, view)).join("");
         } else if (view === "knowledge") {
           resultBox.innerHTML = filtered.map((k) => kbCard(k, view)).join("");
+        } else if (view === "recommendations") {
+          // Группируем файлы по полю group
+          const groupLabels = { own: "Авторские файлы", community: "От других авторов" };
+          const groupOrder = ["own", "community"];
+          const grouped = {};
+          
+          filtered.forEach((r) => {
+            const g = r.group || "own";
+            if (!grouped[g]) grouped[g] = [];
+            grouped[g].push(r);
+          });
+          
+          let html = "";
+          groupOrder.forEach((g) => {
+            if (!grouped[g] || grouped[g].length === 0) return;
+            html += `<div class="files-section"><div class="files-section-label">${esc(groupLabels[g] || g)}</div></div>`;
+            html += grouped[g].map((r) => recCard(r, view)).join("");
+          });
+          
+          resultBox.innerHTML = html;
         } else {
           resultBox.innerHTML = filtered.map((r) => recCard(r, view)).join("");
         }
