@@ -31,24 +31,18 @@ const IMG = {
   // Положи файл в img/recommendations/ и впиши имя:
   recommendationsBanner: "banner.jpg",
 
-  // ── Фото персонажей ──
-  // Положи файлы в img/characters/ и впиши имена.
-  // Ключ (слева от двоеточия) — это id персонажа из data.js
+  // ── Фото персонажей (УСТАРЕВШЕЕ, теперь в js/characters/) ──
+  // Картинки персонажей теперь указываются в файлах js/characters/char-ХХХ.js
+  // Этот объект оставлен для совместимости, но лучше редактировать сами файлы персонажей.
+  // Подробно — в js/characters/README.txt
   characters: {
-    "char-001": "person1.png",
-    "char-002": "person2.png",
-    "char-003": null,  // null = фото пока нет, будет силуэт
+    "char-001": null,  // фото указано в js/characters/char-001.js
+    "char-002": null,
+    "char-003": null,
     "char-004": null,
     "char-005": null,
     "char-006": null
   }
-
-  /* Если добавишь нового персонажа:
-     1) Создай его в data.js → characters с новым id (например "char-007")
-     2) Добавь сюда строку:
-        "char-007": "имя_файла.jpg",
-     3) Положи файл в img/characters/
-  */
 };
 
 // Эту строку не трогай — она нужна для работы сайта
