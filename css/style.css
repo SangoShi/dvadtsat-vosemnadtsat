@@ -46,6 +46,7 @@
   /* Размер */
   --rad: clamp(12px, 1.4vw, 18px);
   --rad-sm: clamp(8px, 0.9vw, 12px);
+  --rad-md: clamp(16px, 1.8vw, 24px);
 
   /* Слои */
   --surf-0: var(--c-black);
@@ -401,7 +402,7 @@ input { font: inherit; }
   height: clamp(60px, 9vw, 88px);
   border-radius: 50%;
   background: radial-gradient(circle at 35% 30%, #FFF9ED, #F3EBD8);
-  box-shadow: 0 0 32px 8px rgba(243, 235, 216, 0.35);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
 }
 
 .city {
@@ -500,8 +501,7 @@ input { font: inherit; }
 
 .hero-eyebrow {
   font-size: var(--step--1);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.02em;
   opacity: 0.75;
   margin-bottom: var(--sp-2xs);
   font-weight: 600;
@@ -608,7 +608,7 @@ input { font: inherit; }
 .btn-playlist {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--sp-2xs);
 }
 
 .btn-playlist svg {
@@ -624,7 +624,7 @@ input { font: inherit; }
 .btn-ghost {
   background: color-mix(in srgb, var(--c-cream) 18%, transparent);
   color: var(--c-cream);
-  border: 1.5px solid color-mix(in srgb, var(--c-cream) 40%, transparent);
+  border: 2px solid color-mix(in srgb, var(--c-cream) 40%, transparent);
   text-shadow: 0 1px 3px rgba(0,0,0,0.8);
 }
 .btn-ghost:hover {
@@ -641,12 +641,7 @@ input { font: inherit; }
   height: clamp(88px, 12vw, 132px);
   color: var(--c-green);
   filter: drop-shadow(0 0 0 var(--c-cream)) drop-shadow(0 0 0 var(--c-cream)) drop-shadow(0 0 0 var(--c-cream)) drop-shadow(0 0 0 var(--c-cream)) drop-shadow(0 4px 12px rgba(0,0,0,0.4));
-  animation: sticker-float 6s ease-in-out infinite;
-}
-
-@keyframes sticker-float {
-  0%, 100% { transform: translateY(0) rotate(-2deg); }
-  50% { transform: translateY(-8px) rotate(2deg); }
+  transform: rotate(-2deg);
 }
 
 /* ════════════════════════════════════════════════════════════════════════
@@ -879,8 +874,7 @@ input { font: inherit; }
 .recommendations-hero .hero-eyebrow {
   font-size: var(--step--1);
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.02em;
   opacity: 0.75;
   margin-bottom: var(--sp-xs);
   color: var(--c-plum);
@@ -1071,7 +1065,7 @@ input { font: inherit; }
   position: absolute;
   top: var(--sp-3xs);
   right: var(--sp-3xs);
-  padding: 3px var(--sp-3xs);
+  padding: 4px var(--sp-3xs);
   background: var(--c-green);
   color: var(--c-black);
   font-size: clamp(0.65rem, 0.8vw, 0.75rem);
@@ -1244,8 +1238,7 @@ input { font: inherit; }
 }
 
 .rec-cat {
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.01em;
   opacity: 0.6;
 }
 
@@ -1256,8 +1249,7 @@ input { font: inherit; }
   border-radius: 999px;
   font-size: 0.7rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.01em;
   color: var(--c-green);
 }
 
@@ -1607,8 +1599,7 @@ input { font: inherit; }
 
 .sheet-label {
   font-size: var(--step--1);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.02em;
   opacity: 0.65;
   font-weight: 600;
 }
@@ -1775,7 +1766,7 @@ input { font: inherit; }
   font-style: italic;
   opacity: 0.85;
   padding: var(--sp-sm);
-  border-left: 3px solid var(--c-green);
+  border-left: 4px solid var(--c-green);
   background: color-mix(in srgb, var(--c-green) 8%, transparent);
   border-radius: 0 4px 4px 0;
   color: var(--c-cream);
@@ -1948,7 +1939,7 @@ input { font: inherit; }
     color-mix(in srgb, var(--c-cream) 33%, transparent) 100%
   );
   color: color-mix(in srgb, var(--c-cream) 35%, transparent);
-  border-radius: 3px;
+  border-radius: 4px;
   user-select: none;
 }
 
